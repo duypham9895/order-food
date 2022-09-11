@@ -3,9 +3,9 @@ import CartIcon from "../cart/CartIcon";
 
 import classes from "./HeaderCartButton.module.css";
 
-const HeaderCartButton = () => {
+const HeaderCartButton = ({ onVisibleCart }) => {
   return (
-    <button className={classes.button}>
+    <button className={classes.button} onClick={onVisibleCart}>
       <span className={classes.icon}>
         <CartIcon />
       </span>
