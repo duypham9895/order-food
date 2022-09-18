@@ -69,12 +69,16 @@ const CartProvider = ({ children }) => {
   const removeItemByIdHandler = (id) => {
     dispatchCartAction({ type: "REMOVE", id });
   };
+  const resetItemsHandler = () => {
+    dispatchCartAction({ type: "RESET" });
+  };
 
   const cartContext = {
     items,
     totalAmount,
     addItem: addItemHandler,
     removeItem: removeItemByIdHandler,
+    resetItems: resetItemsHandler,
   };
 
   return (
