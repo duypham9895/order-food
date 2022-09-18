@@ -4,24 +4,6 @@
   overflow: scroll;
 }
 
-.control {
-  margin-bottom: 0.5rem;
-}
-
-.control label {
-  font-weight: bold;
-  margin-bottom: 0.25rem;
-  display: block;
-}
-
-.control input {
-  font: inherit;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  width: 20rem;
-  max-width: 100%;
-}
-
 .actions {
   display: flex;
   justify-content: flex-end;
@@ -43,8 +25,13 @@
   background-color: #ffe6dc;
 }
 
-.actions .button--alt {
-  color: #8a2b06;
+.actions button:disabled,
+.actions button:disabled:hover,
+.actions button:disabled:active {
+  background-color: #ccc;
+  color: #292929;
+  border-color: #ccc;
+  cursor: not-allowed;
 }
 
 .actions .submit {
@@ -56,13 +43,4 @@
 .actions .submit:hover,
 .actions .submit:active {
   background-color: #7a2706;
-}
-
-.invalid label {
-  color: #ca3e51;
-}
-
-.invalid input {
-  border-color: #aa0b20;
-  background-color: #ffeff1;
 }

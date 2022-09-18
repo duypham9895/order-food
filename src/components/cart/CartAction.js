@@ -3,9 +3,17 @@ import React from "react";
 import classes from "./Cart.module.css";
 import Checkout from "./Checkout";
 
-const CartAction = ({ hasItems, isCheckout, onVisibleCart, orderMeals }) => {
+const CartAction = ({
+  hasItems,
+  isCheckout,
+  onVisibleCart,
+  onCheckout,
+  onOrderMeals,
+}) => {
   if (isCheckout) {
-    return <Checkout onVisibleCart={onVisibleCart} />;
+    return (
+      <Checkout onVisibleCart={onVisibleCart} onOrderMeals={onOrderMeals} />
+    );
   }
   return (
     <div className={classes.actions}>
@@ -13,7 +21,7 @@ const CartAction = ({ hasItems, isCheckout, onVisibleCart, orderMeals }) => {
         Close
       </button>
       {hasItems && (
-        <button onClick={orderMeals} className={classes.button}>
+        <button onClick={onCheckout} className={classes.button}>
           Order
         </button>
       )}
