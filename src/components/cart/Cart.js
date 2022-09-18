@@ -1,21 +1,23 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import isEmpty from "lodash/isEmpty";
 
-import classes from "./Cart.module.css";
-import Modal from "../UI/Modal";
 import CartContext from "../../store/cart-context";
+
+import classes from "./Cart.module.css";
+
+import Modal from "../UI/Modal";
 import CartItem from "./CartItem";
-import useHttp from "../../hooks/use-http";
+import CartAction from "./CartAction";
+// import useHttp from "../../hooks/use-http";
 
 const Cart = ({ onVisibleCart }) => {
-  const {
-    sendRequest: createOrderMeals,
-
-    isLoading,
-    error,
-  } = useHttp();
-  const { items, totalAmount, addItem, removeItem, resetItems } =
-    useContext(CartContext);
+  // const {
+  //   sendRequest: createOrderMeals,
+  //   isLoading,
+  //   error,
+  // } = useHttp();
+  const [isCheckout, setIsCheckout] = useState(false);
+  const { items, totalAmount, addItem, removeItem } = useContext(CartContext);
   const hasItems = !isEmpty(items);
 
   const addItemHandler = (item) => {
@@ -41,40 +43,39 @@ const Cart = ({ onVisibleCart }) => {
     </ul>
   );
 
+  // const orderMealsHandler = () => {
+  //   const requestConfig = {
+  //     url: "https://react-complete-guilde-default-rtdb.asia-southeast1.firebasedatabase.app/meals-orders.json",
+  //     method: "POST",
+  //     body: { items, create_at: new Date().toISOString() },
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   };
+  //   const handleOrderMeals = ({ name }) => {
+  //     console.log({ name });
+  //   };
+  //   createOrderMeals(requestConfig, handleOrderMeals);
+  //   resetItems();
+  // };
+
   const orderMealsHandler = () => {
-    const requestConfig = {
-      url: "https://react-complete-guilde-default-rtdb.asia-southeast1.firebasedatabase.app/meals-orders.json",
-      method: "POST",
-      body: { items, create_at: new Date().toISOString() },
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-    const handleOrderMeals = ({ name }) => {
-      console.log({ name });
-    };
-    createOrderMeals(requestConfig, handleOrderMeals);
-    resetItems();
+    setIsCheckout(true);
   };
 
   return (
     <Modal onCancelModal={onVisibleCart}>
       {cartItems}
-      {error && <p>{error}</p>}
       <div className={classes.total}>
         <span>Total Amount</span>
         <span>{fixedTotalAmount}</span>
       </div>
-      <div className={classes.actions}>
-        <button className={classes["button--alt"]} onClick={onVisibleCart}>
-          Close
-        </button>
-        {hasItems && (
-          <button onClick={orderMealsHandler} className={classes.button}>
-            {isLoading ? "Loading..." : "Order"}
-          </button>
-        )}
-      </div>
+      <CartAction
+        hasItems={hasItems}
+        isCheckout={isCheckout}
+        onVisibleCart={onVisibleCart}
+        orderMeals={orderMealsHandler}
+      />
     </Modal>
   );
 };
